@@ -40,9 +40,12 @@ def PIDController(
     # ------------- DEFINE YOUR PID FUNCTION BELOW ---------
 
     # These are random values, replace with your implementation of a PID controller in here
-    omega = np.random.uniform(-8.0, 8.0)
-    e = np.random.random()
-    e_int = np.random.random()
+    e=y_ref-y_hat
+    #print("Error:",e)
+    e_int = e*delta_t+prev_int_y
+    e_int = max(min(e_int,2),-2)
+    e_der = (e-prev_e_y)/delta_t
+    omega = kp*e+kd*e_der+ki*e_int
     # ---
     
     return v_0, omega, e, e_int
